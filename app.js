@@ -1,24 +1,45 @@
-var profileDataArgs = process.argv.slice(2, process.argv.length);
+const fs = require('fs'); //This is how you load a module (sort of like a style file or package in latex). Now when you use fs you can access its methods and properties or whatever. Just like in latex, you call it at the top (or before you call it anyway)
 
-const printProfileData = profileDataArr => {   //with only one param you can omit the parens around it
-    //This
-    for (let i = 0; i < profileDataArr.length; i += 1) {
-    console.log(profileDataArr[i]);
-    }
+const snorms = require('./src/page-template.js');//loads your local generatePage module in the subordinate src dir
 
-    console.log('===================');
+const profileDataArgs = process.argv.slice(2);
 
-    //is the same as this ...
+const [nomiker,github] = profileDataArgs; //Alternative to the above assignments, apparently it automatically increments
+//the syntax seems to be const [first-element-of-array,second,...] = arrayname; We were stacking these in class
 
-    profileDataArr.forEach((profileItem) => {
-        console.log(profileItem)
-    });
 
-    //We could clean this up even further:
-    //profileDataArr.forEach(profileItem => console.log(profileItem)); //using ES6 syntax and arrow functions
-};
+//"require" is like "usepackage" in latex 
 
-printProfileData(profileDataArgs);
+
+//assignment destructuring
+
+// const nomiker = profileDataArgs[0];
+// const github = profileDataArgs[1]; 
+
+fs.writeFile('./index.html', snorms(nomiker,github), err => { //./index.html is the same as index.html: both mean "in my folder"
+    if (err) throw err;
+    console.log('Portfolio complete! Check out index.html to see the output!');
+});
+
+// const printProfileData = profileDataArr => {   //with only one param you can omit the parens around it
+//     //This
+//     for (let i = 0; i < profileDataArr.length; i += 1) {
+//     console.log(profileDataArr[i]);
+//     }
+
+//     console.log('===================');
+
+//     //is the same as this ...
+
+//     profileDataArr.forEach((profileItem) => {
+//         console.log(profileItem)
+//     });
+
+//     //We could clean this up even further:
+//     //profileDataArr.forEach(profileItem => console.log(profileItem)); //using ES6 syntax and arrow functions
+// };
+
+// printProfileData(profileDataArgs);
 
 //var is function-scoped, so redeclaring it in a block will cause its value outside the block to change as well:
 
@@ -61,3 +82,7 @@ printProfileData(profileDataArgs);
 //var has function-scope 
 
 //.forEach method on arrays - basically automatically runs a foreloop through the array
+
+//Notes through 9.2
+//Template literals are a way to plug input variables into a string with backticks 
+//You can use linebreaks here to produce linebreaks within backticks 
