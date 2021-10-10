@@ -1,10 +1,27 @@
-const fs = require('fs'); //This is how you load a module (sort of like a style file or package in latex). Now when you use fs you can access its methods and properties or whatever. Just like in latex, you call it at the top (or before you call it anyway)
+const inquirer = require('inquirer');
 
-const snorms = require('./src/page-template.js');//loads your local generatePage module in the subordinate src dir
+inquirer 
+    .prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'What is your name?'
+        }
+    ])
+    .then(answers => console.log(answers));
 
-const profileDataArgs = process.argv.slice(2);
+// const fs = require('fs'); //This is how you load a module (sort of like a style file or package in latex). Now when you use fs you can access its methods and properties or whatever. Just like in latex, you call it at the top (or before you call it anyway)
 
-const [nomiker,github] = profileDataArgs; //Alternative to the above assignments, apparently it automatically increments
+// const generatePage = require('./src/page-template'); //it is somewhat odd to me that using a module or a package requires naming a constant
+
+// const pageHTML = generatePage(name,github);
+
+// fs.writeFile('./index.html', snorms(nomiker,github), err => { //./index.html is the same as index.html: both mean "in my folder"
+//     if (err) throw err;
+//     console.log('Portfolio complete! Check out index.html to see the output!');
+// });
+
+//Alternative to the above assignments, apparently it automatically increments
 //the syntax seems to be const [first-element-of-array,second,...] = arrayname; We were stacking these in class
 
 
@@ -16,10 +33,7 @@ const [nomiker,github] = profileDataArgs; //Alternative to the above assignments
 // const nomiker = profileDataArgs[0];
 // const github = profileDataArgs[1]; 
 
-fs.writeFile('./index.html', snorms(nomiker,github), err => { //./index.html is the same as index.html: both mean "in my folder"
-    if (err) throw err;
-    console.log('Portfolio complete! Check out index.html to see the output!');
-});
+
 
 // const printProfileData = profileDataArr => {   //with only one param you can omit the parens around it
 //     //This
