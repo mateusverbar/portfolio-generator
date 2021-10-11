@@ -1,3 +1,7 @@
+const fs = require('fs'); //This is how you load a module (sort of like a style file or package in latex). Now when you use fs you can access its methods and properties or whatever. Just like in latex, you call it at the top (or before you call it anyway)
+
+const generatePage = require('./src/page-template'); //it is somewhat odd to me that using a module or a package requires naming a constant
+
 const inquirer = require('inquirer');
 
 const promptUser = () => {
@@ -51,11 +55,11 @@ const promptProject = portfolioData => {
     if (!portfolioData.projects) {
         portfolioData.projects = [];
     }
-    console.log(`
+    console.log(` 
     =================
     Add a New Project
     =================
-    `);
+    `); //template literals - we cannot comment within them
     return inquirer.prompt([
         {
             type:'input',
@@ -122,15 +126,66 @@ const promptProject = portfolioData => {
     });
 };
 
-promptUser()
-    .then(promptProject)
-    .then(portfolioData => {
-        console.log(portfolioData);
-    });
+promptUser() //COMMENT BACK IN LATER AND COMMENT OUT CODE BELOW from "const mockData" to "generatePage(mockdata)"
+  .then(promptProject)
+  .then(portfolioData => {
+    const pageHTML = generatePage(portfolioData);
 
-// const fs = require('fs'); //This is how you load a module (sort of like a style file or package in latex). Now when you use fs you can access its methods and properties or whatever. Just like in latex, you call it at the top (or before you call it anyway)
+    fs.writeFile('./index.html', pageHTML, err => {
+       if (err) throw new Error(err);
 
-// const generatePage = require('./src/page-template'); //it is somewhat odd to me that using a module or a package requires naming a constant
+       console.log('Page created! Check out index.html in this directory to see it!');
+     });
+  });
+
+// const mockData = {
+//     name: 'Lernantino',
+//     github: 'lernantino',
+//     confirmAbout: true,
+//     about:
+//       'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et.',
+//     projects: [
+//       {
+//         name: 'Run Buddy',
+//         description:
+//           'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.',
+//         languages: ['HTML', 'CSS'],
+//         link: 'https://github.com/lernantino/run-buddy',
+//         feature: true,
+//         confirmAddProject: true
+//       },
+//       {
+//         name: 'Taskinator',
+//         description:
+//           'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.',
+//         languages: ['JavaScript', 'HTML', 'CSS'],
+//         link: 'https://github.com/lernantino/taskinator',
+//         feature: true,
+//         confirmAddProject: true
+//       },
+//       {
+//         name: 'Taskmaster Pro',
+//         description:
+//           'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.',
+//         languages: ['JavaScript', 'jQuery', 'CSS', 'HTML', 'Bootstrap'],
+//         link: 'https://github.com/lernantino/taskmaster-pro',
+//         feature: false,
+//         confirmAddProject: true
+//       },
+//       {
+//         name: 'Robot Gladiators',
+//         description:
+//           'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque.',
+//         languages: ['JavaScript'],
+//         link: 'https://github.com/lernantino/robot-gladiators',
+//         feature: false,
+//         confirmAddProject: false
+//       }
+//     ]
+//   };
+
+// const pageHTML = generatePage(mockData);
+
 
 // const pageHTML = generatePage(name,github);
 
